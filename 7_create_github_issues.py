@@ -82,7 +82,6 @@ def main():
     for issue in issues:
         # skip issues which have already been created
         if issue.get("migration").get("created_github"):
-            print(issue["number"])
             continue
 
         res = create_issue(issue, DEST_REPO)
@@ -95,7 +94,6 @@ def main():
         res = update_issue(issue)
         issue["migration"]["updated_source_github"] = True
         write_issue(issue, DIR)
-        pdb.set_trace()
 
 
 if __name__ == "__main__":
