@@ -9,26 +9,28 @@ from os.path import isfile, join
 import pdb
 from pprint import pprint as print
 
-from config.config import DIR_ZENHUB, DIR_LABELED, LABEL_FILE, REPO_MAP
+from config.config import DIR, LABEL_FILE, REPO_MAP
 from config.secrets import GITHUB_USER, GITHUB_PASSWORD
 
 from _logger import get_logger
 
+
 def write_issue(issue, directory):
-    fname = f"{directory}/{issue['repo_name']}${issue['number']}.json"
-    
+    fname = issue["path"]
+
     with open(fname, "w") as fout:
         logger.info(f"{issue['repo_name']} {issue['number']}")
         fout.write(json.dumps(issue))
 
     return True
 
+
 def map_repos(labels, repo_name, repo_map):
     label = repo_map.get(repo_name)
 
     if label and label not in labels:
         labels.append(label)
-    
+
     return labels
 
 
@@ -67,15 +69,19 @@ def main():
 
         label_lookup = build_lookup(label_map)
 
-    fnames = [join(DIR_ZENHUB, f) for f in listdir(DIR_ZENHUB) if isfile(join(DIR_ZENHUB, f)) and f.endswith(".json")]
-    
+    fnames = [
+        join(DIR, f)
+        for f in listdir(DIR)
+        if isfile(join(DIR, f)) and f.endswith(".json")
+    ]
+
     for fname in fnames:
         issue = get_issue(fname)
         labels = issue.get("labels")
         labels = map_labels(labels, label_lookup)
-        labels = map_repos(labels, issue["repo_name"], REPO_MAP)        
-        issue["labels"] = labels
-        write_issue(issue, DIR_LABELED)
+        labels = map_repos(labels, issue["repo_name"], REPO_MAP)
+        issue["migration"]["labels"] = labels
+        write_issue(issue, DIR)
 
 
 if __name__ == "__main__":

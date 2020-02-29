@@ -1,8 +1,6 @@
 """
-Prepare the new github issues for upload:
-- add link to source issue
-- add "migrated" label
-- add new content to "github_payload element"
+- Create new github issues
+- Update source issue with a link to the new issue
 """
 import json
 from os import listdir, remove
@@ -11,19 +9,14 @@ import pdb
 
 import requests
 
-from config.config import DIR_GITHUB_CREATE, DIR_GITHUB_UPDATE, DEST_REPO
+from config.config import DIR, DEST_REPO
 from config.secrets import GITHUB_USER, GITHUB_PASSWORD
 
 from _logger import get_logger
 
-def delete_issue(issue, directory):
-    fname = f"{directory}/{issue['repo_name']}${issue['number']}.json"
-    remove(fname)
-    return True
-
 
 def write_issue(issue, dest):
-    fname = f"{dest}/{issue['repo_name']}${issue['number']}.json"
+    fname = issue["path"]
 
     with open(fname, "w") as fout:
         fout.write(json.dumps(issue))
@@ -32,25 +25,31 @@ def write_issue(issue, dest):
 
 
 def update_issue(issue):
-    payload = {"body" : issue["body"]}
+    payload = {
+        "body": issue["migration"]["source_body_update"],
+        "labels": issue["labels"],
+    }
+
+    # append special "migrated" label
+    payload["labels"].append("migrated")
+
     url = issue["url"]
     res = requests.patch(url, json=payload, auth=(GITHUB_USER, GITHUB_PASSWORD))
     res.raise_for_status()
-    return res
+    return res.json()
 
 
-def update_body(issue):
-    new_issue_number = issue["github_response"]["number"]
-    new_url = f"https://github.com/cityofaustin/{DEST_REPO}/issues/{new_issue_number}"
-    note = f"\n\n*Migrated to [{DEST_REPO} #{new_issue_number}]({new_url})*"
-    return issue["body"] + note
+def update_body(body, number, repo):
+    url = f"https://github.com/cityofaustin/{repo}/issues/{number}"
+    note = f"\n\n*Migrated to [{repo} #{number}]({url})*"
+    return body + note
 
 
 def create_issue(issue, repo):
     logger.info(f"{issue['repo_name']} {issue['number']}")
 
-    payload = issue["github_payload"]
-    payload["assignees"] = [] # todo: REMOVE THIS!
+    payload = issue["migration"]["github_payload"]
+    payload["assignees"] = []  # todo: REMOVE THIS!
     url = f"https://api.github.com/repos/cityofaustin/{repo}/issues"
     res = requests.post(url, json=payload, auth=(GITHUB_USER, GITHUB_PASSWORD))
 
@@ -59,31 +58,46 @@ def create_issue(issue, repo):
     logger.info(f"{repo} {res.json()['number']}")
     return res.json()
 
-        
 
 def load_issues(source_dir):
     issues = []
 
-    fnames = [join(source_dir, f) for f in listdir(source_dir) if isfile(join(source_dir, f)) and f.endswith(".json")]
+    fnames = [
+        join(source_dir, f)
+        for f in listdir(source_dir)
+        if isfile(join(source_dir, f)) and f.endswith(".json")
+    ]
 
     for fname in fnames:
         with open(fname, "r") as fin:
-            issue = json.loads(fin.read()) 
+            issue = json.loads(fin.read())
             issues.append(issue)
 
     return issues
 
 
 def main():
-    issues = load_issues(DIR_GITHUB_CREATE)
+    issues = load_issues(DIR)
 
     for issue in issues:
-        issue["github_response"] = create_issue(issue, DEST_REPO)
-        issue["body"] = update_body(issue)
-        write_issue(issue, DIR_GITHUB_UPDATE)
-        delete_issue(issue, DIR_GITHUB_CREATE)
+        # skip issues which have already been created
+        if issue.get("migration").get("created_github"):
+            print(issue["number"])
+            continue
+
+        res = create_issue(issue, DEST_REPO)
+        issue["migration"]["created_github"] = True
+        issue["migration"]["new_issue_number"] = res["number"]
+        write_issue(issue, DIR)
+        issue["migration"]["source_body_update"] = update_body(
+            issue["body"], res["number"], DEST_REPO
+        )
         res = update_issue(issue)
-    
+        issue["migration"]["updated_source_github"] = True
+        write_issue(issue, DIR)
+        pdb.set_trace()
+
+
 if __name__ == "__main__":
     logger = get_logger("github_create")
     main()

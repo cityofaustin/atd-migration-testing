@@ -9,11 +9,10 @@ from os import listdir
 from os.path import isfile, join
 import pdb
 
-from config.config import DIR_MILESTONES, DIR_GITHUB_CREATE
+from config.config import DIR
 
 from _logger import get_logger
 
-GITHUB_FIELDS = ["assignees", "labels", "state", "title", "body", "milestone"]
 
 def write_issues(issues, dest):
     for issue in issues:
@@ -23,7 +22,6 @@ def write_issues(issues, dest):
             logger.info(f"{issue['repo_name']} {issue['number']}")
             fout.write(json.dumps(issue))
     return True
-
 
 
 def update_body(issue):
@@ -36,33 +34,42 @@ def update_body(issue):
     return body
 
 
-def build_payload(issue, fields):
-    return { key : issue[key] for key in issue.keys() if key in fields }
+def build_payload(issue):
+    GITHUB_FIELDS = ["assignees", "state", "title", "body"]
+    payload = {key: issue[key] for key in issue.keys() if key in GITHUB_FIELDS}
+    payload["labels"] = issue["migration"].get("labels")
+    payload["milestone"] = issue["migration"].get("milestone")
+    return payload
 
 
 def load_issues(source_dir):
     issues = []
 
-    fnames = [join(source_dir, f) for f in listdir(source_dir) if isfile(join(source_dir, f)) and f.endswith(".json")]
+    fnames = [
+        join(source_dir, f)
+        for f in listdir(source_dir)
+        if isfile(join(source_dir, f)) and f.endswith(".json")
+    ]
 
     for fname in fnames:
         with open(fname, "r") as fin:
-            issue = json.loads(fin.read()) 
+            issue = json.loads(fin.read())
             issues.append(issue)
 
     return issues
 
 
 def main():
-    issues = load_issues(DIR_MILESTONES)
+    issues = load_issues(DIR)
 
     for issue in issues:
-        issue["github_payload"] = build_payload(issue, GITHUB_FIELDS)
-        issue["github_payload"]["body"] = update_body(issue)
-        issue["github_payload"]["labels"].append("migrated")
+        issue["migration"]["github_payload"] = build_payload(issue)
+        issue["migration"]["github_payload"]["body"] = update_body(issue)
+        issue["migration"]["github_payload"]["labels"].append("migrated")
 
-    write_issues(issues, DIR_UPLOAD_GITHUB)
-    
+    write_issues(issues, DIR)
+
+
 if __name__ == "__main__":
     logger = get_logger("stage_github_upload")
     main()

@@ -18,32 +18,48 @@ import pdb
 
 import requests
 
-from config.config import DEST_REPO, DIR_LABELED, LABEL_FILE, SOURCE_REPOS
+from config.config import DEST_REPO, DIR, LABEL_FILE, SOURCE_REPOS
 
 from config.secrets import GITHUB_USER, GITHUB_PASSWORD
 from _logger import get_logger
 
 
 def get_missing_labels(dest_labels, label_defs, issue_labels):
-    return [label_defs[label] for label in label_defs.keys() if label not in dest_labels and label in issue_labels]
+    return [
+        label_defs[label]
+        for label in label_defs.keys()
+        if label not in dest_labels and label in issue_labels
+    ]
 
 
 def get_labels_from_csv(fname):
     with open(fname, "r") as fin:
         reader = csv.DictReader(fin)
-        return {label["name"] : { "name" : label["name"], "color" : label["color"], "description" : label["description"]} for label in reader if label["action"] != "map"}
+        return {
+            label["name"]: {
+                "name": label["name"],
+                "color": label["color"],
+                "description": label["description"],
+            }
+            for label in reader
+            if label["action"] != "map"
+        }
 
 
 def get_labels_from_issues(source_directory):
-        # get all labels from all issues
-    fnames = [join(source_directory, f) for f in listdir(source_directory) if isfile(join(source_directory, f)) and f.endswith(".json")]
-    
+    # get all labels from all issues
+    fnames = [
+        join(source_directory, f)
+        for f in listdir(source_directory)
+        if isfile(join(source_directory, f)) and f.endswith(".json")
+    ]
+
     labels = []
 
     for fname in fnames:
         with open(fname, "r") as fin:
             issue = json.loads(fin.read())
-            if issue.get("labels"):
+            if issue["migration"].get("labels"):
                 labels.extend(issue["labels"])
 
     return list(set(labels))
@@ -54,7 +70,7 @@ def get_labels_from_source_repos(repos):
 
     for repo in repos:
         labels = get_labels_from_repo(repo["name"])
-        
+
         for label in labels:
             if label["name"] not in source_labels:
                 source_labels[label["name"]] = label
@@ -68,10 +84,12 @@ def get_labels_from_repo(repo_name):
     url = f"https://api.github.com/repos/cityofaustin/{repo_name}/labels"
 
     last_url = None
-    
+
     while True:
-        res = requests.get(url, params={"per_page":100}, auth=(GITHUB_USER, GITHUB_PASSWORD))
-        
+        res = requests.get(
+            url, params={"per_page": 100}, auth=(GITHUB_USER, GITHUB_PASSWORD)
+        )
+
         res.raise_for_status()
 
         for label in res.json():
@@ -114,11 +132,11 @@ def reduce_labels(labels):
 
 def create_label(label, repo_name):
     url = f"https://api.github.com/repos/cityofaustin/{repo_name}/labels"
-    
+
     payload = {
-        "name" : label["name"],
-        "color" : label["color"],
-        "description" : label["description"]
+        "name": label["name"],
+        "color": label["color"],
+        "description": label["description"],
     }
 
     res = requests.post(url, json=payload, auth=(GITHUB_USER, GITHUB_PASSWORD))
@@ -126,7 +144,7 @@ def create_label(label, repo_name):
     res.raise_for_status()
 
     logger.info(f"{payload['name']}")
-    
+
     return None
 
 
@@ -146,7 +164,7 @@ def main():
     source_labels.update(file_labels)
 
     # get all labels from labeled issues
-    issue_labels = get_labels_from_issues(DIR_LABELED)
+    issue_labels = get_labels_from_issues(DIR)
 
     create_labels = get_missing_labels(dest_labels, source_labels, issue_labels)
 
