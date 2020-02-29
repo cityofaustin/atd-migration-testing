@@ -11,7 +11,7 @@ import time
 
 import requests
 
-from config.config import DIR_GITHUB, DIR_ZENHUB, FAILDIR
+from config.config import DIR_GITHUB_DOWNLOAD, DIR_ZENHUB, FAILDIR
 from config.secrets import ZENHUB_ACCESS_TOKEN
 from _logger import get_logger
 

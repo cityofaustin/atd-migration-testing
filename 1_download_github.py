@@ -9,7 +9,7 @@ import time
 from github import Github
 import requests
 
-from config.config import SOURCE_REPOS, DIR_GITHUB
+from config.config import SOURCE_REPOS, DIR_GITHUB_DOWNLOAD
 from config.secrets import GITHUB_USER, GITHUB_PASSWORD
 from _logger import get_logger
 
