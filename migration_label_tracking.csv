@@ -1,0 +1,151 @@
+name,color,description,corresponding product label,action
+dependencies,0366d6,Pull requests that update a dependency file,,new
+Product: AMD Data Tracker,3D3D3D,,,new
+Product: AMD Fulcrum,3D3D3D,,,new
+Product: ATD Forms,3D3D3D,A collection of simple digital forms to support Austin Transportation operations,,new
+Product: Banners,3D3D3D,Platform to manage street banner reservations and installations,,new
+Product: Data & Performance Hub,3D3D3D,,,new
+Product: Data Lake,3D3D3D,ATD data lake development with UT CTR,,new
+Product: Dockless Dataviz,3D3D3D,,,new
+Product: Dockless Licensing,3D3D3D,,,new
+Product: Finance & Inventory,3D3D3D,,,new
+Product: Micromobility,3D3D3D,,,new
+Product: Mobile Signal Work Orders,3D3D3D,Mobile-first app for Signal Techs using React and Knack API,,new
+Product: Mobility Project Editor,3D3D3D,,,new
+Product: Mobility Services,3D3D3D,,,new
+Product: Residential Parking Permit Digitization,3D3D3D,A web-based interface through which residents can easily apply for and renew their residential parking permits,,new
+Product: ROW Portal,3D3D3D,,,new
+Product: Service Requests,3D3D3D,,,new
+Product: Signs & Markings,3D3D3D,,,new
+Product: Signs Mobile Work Orders,3D3D3D,Mobile-first app for Street Signs Techs using React and Knack API,,new
+Product: Transportation Development Services,3D3D3D,,,new
+Product: Vision Zero Crash Data System,3D3D3D,Centralize the management of ATD's Vision Zero data,,new
+Product: Vision Zero Editor,3D3D3D,,,new
+Product: Vision Zero in Action,3D3D3D,,,new
+Product: Vision Zero Viewer,3D3D3D,App for APD to log Vision Zero in Action enforcement activities,,new
+Product: Visitor Log,3D3D3D,A sign-in application for ATD office visitors,,new
+Project: Beacon Data Tracking,86B1C6,Associate school zone beacons and other beacons to work orders,,new
+Project: Online Bike Map,86B1C6,Web-friendly version of Austin's Bike Map,,new
+Project: Work Order Extension,86B1C6,"Create Work Orders workflows for MMC, Communications, and Signals Engineers",,new
+Product: AMD Tracker,3D3D3D,Platform to manage Arterial Management Division's data and operations,Product: AMD Data Tracker,map
+Product: DTS Portal,3D3D3D,,Product: Service Requests,map
+Product: GIS,3D3D3D,,Service: Geo,map
+Product: Mobility Project Explorer,3D3D3D,An online platform to visualize and explore Austin's mobility projects.,Product: Mobility Project Viewer,map
+Product: MPD,3D3D3D,,Product: Mobility Project Database,map
+Product: MPV,3D3D3D,,Product: Mobility Project Viewer,map
+Product: RPP,3D3D3D,,Product: Residential Parking Permit Digitization,map
+Product: VZA,3D3D3D,,Product: Vision Zero in Action,map
+Product: VZA App,3D3D3D,App to manage Vision Zero in Action enforcement activities,Product: Vision Zero in Action,map
+Product: VZE,3D3D3D,,Product: Vision Zero Editor,map
+Product: VZV,3D3D3D,,Product: Vision Zero Viewer,map
+Project: Data Lake,86B1C6,ATD data lake development with UT CTR,Product: Data Lake,map
+Project: Development Review Workflow,86B1C6,Project serving Transportation Engineering,Product: Transportation Development Services,map
+Project: Mobile Signal Work Order,86B1C6,Mobile-first app for Signal Techs using React and Knack API,Product: Mobile Signal Work Orders,map
+Project: Mobility Project Database,86B1C6,,Product: Mobility Project Database,map
+Project: Residential Parking Permits,86B1C6,"Online platform for residential parking permit applications, purchases, and renewals",Product: Residential Parking Permit Digitization,map
+Project: Signs Mobile Work Orders,86B1C6,Mobile-first app for Street Signs Techs using React and Knack API,Product: Signs Mobile Work Orders,map
+Project: TDSD Phase 2,86B1C6,,Product: Transportation Development Services,map
+Project: Vision Zero Crash Data System,86B1C6,Centralize the management of ATD's Vision Zero data,Product: Vision Zero Crash Data System,map
+Project: Vision Zero Viewer,86B1C6,Public-facing interactive dashboard which displays metrics related to Vision Zero Program.,Product: Vision Zero Viewer,map
+Project: VZA App,86B1C6,App for APD to log Vision Zero in Action enforcement activities,Product: Vision Zero in Action,map
+Project: VZA Citation App,86B1C6,,Product: Vision Zero in Action,map
+Duplicate,5F7D8C,,,ok
+Epic,3E4B9E,,,ok
+Impact: 1-Severe,FF7261,Severely impacts ATD service delivery,,ok
+Impact: 2-Major,FF9A8E,Causes a major interruption of ATD service delivery,,ok
+Impact: 3-Minor,FFCDCA,Deteriorates ATD service delivery,,ok
+Impact: 4-None,FFEEED,Does not affect ATD service delivery,,ok
+Index,3E4B9E,"Contains a project's overview and status in addition to relevant assets, data, and information",,ok
+Need: 1-Must Have,FF7261,No point in delivering a solution without this,,ok
+Need: 2-Should Have,FF9A8E,"May be painful to leave out, but the solution is still viable",,ok
+Need: 3-Could Have,FFCDCA,"Wanted, but affects fewer users or has less impact on business than other features",,ok
+Need: 4-Won't Have,FFE9E9,Will not be delivered at this time,,ok
+Product: AMANDA,3D3D3D,,,ok
+Product: Dockless Mobility Operations,3D3D3D,Centralized tracking system Dockless Mobility Program,,ok
+Product: Mobility Project Database,3D3D3D,"A comprehensive mobility project tracking platform for Austin, Texas.",,ok
+Product: Mobility Project Viewer,3D3D3D,An online platform to visualize and explore Austin's mobility projects.,,ok
+Product: RPP Back Office,3D3D3D,,,ok
+Project: AGOL Audit,86B1C6,Clean-up of all ATD owned content on ArcGIS Online,,ok
+Project: ATD AMANDA Backlog,86B1C6,Engagement with Unisys to develop all of ATD's backlog items.,,ok
+Project: AULCC Utility Mapping,86B1C6,,,ok
+Project: AWS Migration,86B1C6,Migration to ATD-owned AWS Org,,ok
+Project: B-Cycle Station Planning,86B1C6,Locate new B-Cycle stations with the help of GIS,,ok
+Project: BI Discovery,86B1C6,Identify ATD's Business Intelligence needs and evaluate potential solutions,,ok
+Project: Bike Rack Data Inventory,86B1C6,Support PE in collecting and maintaing bike rack data for servicing.,,ok
+Project: Branding and Identity,86B1C6,"Create a set of mission, values, standards, and identity assets",,ok
+Project: CTN,86B1C6,GIS dataset encompassing all information about all modes of transportation.,,ok
+Project: DAPCZ Agenda Tool,86B1C6,,,ok
+Project: Data Driven PHB Ranking,86B1C6,New process for PHB prioritization ranking,,ok
+Project: DTS Service Delivery,86B1C6,"Design and document processes the DTS team can use to intake, manage, and deliver services.",,ok
+Project: Inspector Prioritization Automation,86B1C6,A multi-phase project to help ROW inspectors prioritize their work.,,ok
+Project: Job Calendar Work Schedule,86B1C6,,,ok
+Project: MDS Upgrades,86B1C6,Tracks the work needed to implement micromobility per-trip fees,,ok
+Project: Micromobility Dashboard Updates,86B1C6,Enhancements to our public facing dashboard of dockless mobility data,,ok
+Project: Mobility Data Privacy & Security,86B1C6,Establish principles and practices to support the safe and secure management of micromobility data.,,ok
+Project: OSM Bicycle Data Update,86B1C6,,,ok
+Project: Paperless Hiring,86B1C6,Effort to reduce/eliminate the use of paper during the ATD hiring process,,ok
+Project: Parking Enterprise Work Order System,86B1C6,,,ok
+Project: Parking Inventory,86B1C6,Parking data migration from AGOL to SDE,,ok
+Project: Parking Technology Procurement,86B1c6,,,ok
+Project: Print Bike Map,86B1C6,City of Austin's print version of the bike map.,,ok
+Project: ROW Activity Dashboard,86B1C6,Publicly available web map that displays ATD's activities in the right of way.,,ok
+Project: ROW Attendance Tracker,86B1C6,,,ok
+Project: ROW Wishlist,86B1C6,For tracking ROW wishlist items from Nov 2019,,ok
+Project: ROWMAN Ph 2,86B1C6,Phase 2 of the ROWMAN project.,,ok
+Project: ROWMAN Ph 3,86B1C6,Phase 3 of the ROWMAN project.,,ok
+Project: ROWMAN Ph 4,86B1C6,Phase 4 of the ROWMAN project.,,ok
+Project: ROWMAN Ph 5,86B1C6,,,ok
+Project: ROWMAN Ph 6,86B1C6,,,ok
+Project: SCP3,86B1C6,Small Cell Permit Phase 3,,ok
+Project: Sign Data Collection,86B1C6,Acquire comprehensive street sign data across the city,,ok
+Project: Signs Migration,86B1C6,Signs migration to Knack,,ok
+Project: SMB 311 Module,86B1C6,311 CSR integration in Signs and Markings Data Tracker,,ok
+Project: Traffic Counts,86B1C6,This project created a new module in the Data Tracker to help streamline the traffic count and data,,ok
+Project: Traffic Registry Digitization,86B1C6,This is an effort to digitize all of our street regulations in a geospatial database,,ok
+Project: TxDOT Center-to-Center,86B1C6,Establish data sharing between the City of Austin and TxDOT,,ok
+Project: Uniform & PPE Tracking,86B1C6,Project to track issuance of uniforms and protective equipment for various divisions,,ok
+Project: Warehouse Inventory,86B1C6,Identifying an inventory management solution for ATD,,ok
+Service: Apps,F2FC6D,Knack application support,,ok
+Service: Dev,F2FC6D,Infrastructure and engineering,,ok
+Service: Geo,F2FC6D,Geospatial services,,ok
+Service: PM,F2FC6D,Product and project management,,ok
+Status: Active,71E08F,Projects under active development by the DTS team,,ok
+Type: Bug Report,0B3E79,Something is not right,,ok
+Type: Communication,0B3E79,"Presentations, blog posts, etc.",,ok
+Type: Data,0B3E79,Generating and delivering datasets and reports,,ok
+Type: DevOps,0B3E79,Continuous integration pipeline operations and infrastructure,,ok
+Type: Documentation,0B3E79,"User guides, developer documentation, planning documents, etc.",,ok
+Type: Enhancement,0B3E79,Request for an improvement to existing functionality in an application,,ok
+Type: Feature,0B3E79,Request for enhancements or new functionality in an existing application,,ok
+Type: IT Support,0B3E79,"Software licenses, user accounts and logins, hardware set up, etc.",,ok
+Type: Map Request,0B3E79,Request for a map,,ok
+Type: Meeting,0B3E79,"Scheduled discussion, work session, etc.",,ok
+Type: New Application,0B3E79,Request for a new application; user needs cannot be met by an existing application,,ok
+Type: Operations,0B3E79,Internal DTS planning and administration,,ok
+Type: Other,0B3E79,Not covered by other issue types,,ok
+Type: Reports,0B3E79,Request for reporting,,ok
+Type: Research,0B3E79,Research or discovery work,,ok
+Type: Testing,0B3E79,"Testing for usability, security, performance, accessibility, etc.",,ok
+Type: Training,0B3E79,Request for training,,ok
+WIP,5F7D8C,Work in progress,,ok
+Workgroup: AMD,00BFA5,Arterial Management Division,,ok
+Workgroup: ATSD,00BFA5,Active Transportation and Street Design,,ok
+Workgroup: CPO,00BFA5,Cooridor Program Office,,ok
+Workgroup: CTM,00BFA5,Communications and Technology Management,,ok
+Workgroup: DR,00BFA5,Development Review,,ok
+Workgroup: DTS,00BFA5,Data and Technology Services,,ok
+Workgroup: Finance,00BFA5,Finance and Administration,,ok
+Workgroup: HR,00BFA5,Human Resources,,ok
+Workgroup: OOD,00BFA5,Office of the Director,,ok
+Workgroup: OSE,00BFA5,Office of Special Events,,ok
+Workgroup: Other,00BFA5,,,ok
+Workgroup: PE,00BFA5,Parking Enterprise,,ok
+Workgroup: PIO,00BFA5,Public Information Officers,,ok
+Workgroup: PWD,00BFA5,Public Works Department,,ok
+Workgroup: ROW,00BFA5,Right of Way Management,,ok
+Workgroup: SDD,00BFA5,Systems Development Division,,ok
+Workgroup: SM,00BFA5,Smart Mobility,,ok
+Workgroup: SMB,00BFA5,"Signs, Markings and Banners",,ok
+Workgroup: TDSD,00BFA5,Transportation Development Services Division,,ok
+Workgroup: TE,00BFA5,Transportation Engineering,,ok
+Workgroup: VZ,00BFA5,Vision Zero Program,,ok
