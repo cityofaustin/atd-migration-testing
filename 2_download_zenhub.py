@@ -73,7 +73,7 @@ def get_zenhub_issue(issue):
         return None
     
     else:
-        issue["pipeline"] = zenhub_issue.get("pipelines")
+        issue["pipelines"] = zenhub_issue.get("pipelines")
         issue["estimate"] = zenhub_issue.get("estimate")
         issue["is_epic"] = zenhub_issue.get("is_epic")
 
