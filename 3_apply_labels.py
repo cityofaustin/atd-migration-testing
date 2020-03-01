@@ -9,6 +9,7 @@ from os.path import isfile, join
 import pdb
 from pprint import pprint as print
 
+import _utils
 from config.config import DIR, LABEL_FILE, REPO_MAP
 from config.secrets import GITHUB_USER, GITHUB_PASSWORD
 
@@ -69,14 +70,9 @@ def main():
 
         label_lookup = build_lookup(label_map)
 
-    fnames = [
-        join(DIR, f)
-        for f in listdir(DIR)
-        if isfile(join(DIR, f)) and f.endswith(".json")
-    ]
+    issues = _utils.load_issues(DIR)
 
-    for fname in fnames:
-        issue = get_issue(fname)
+    for issue in issues:
         labels = issue.get("labels")
         labels = map_labels(labels, label_lookup)
         labels = map_repos(labels, issue["repo_name"], REPO_MAP)

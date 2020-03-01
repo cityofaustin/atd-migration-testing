@@ -8,8 +8,8 @@ import pdb
 
 import requests
 
+import _utils
 from config.config import DIR, DEST_REPO
-
 from config.secrets import GITHUB_USER, GITHUB_PASSWORD
 
 from _logger import get_logger
@@ -79,25 +79,9 @@ def get_milestones_from_repo(repo_name):
     return milestones
 
 
-def load_issues(source_dir):
-    issues = []
-
-    fnames = [
-        join(source_dir, f)
-        for f in listdir(source_dir)
-        if isfile(join(source_dir, f)) and f.endswith(".json")
-    ]
-
-    for fname in fnames:
-        with open(fname, "r") as fin:
-            issue = json.loads(fin.read())
-            issues.append(issue)
-
-    return issues
-
 
 def main():
-    issues = load_issues(DIR)
+    issues = _utils.load_issues(DIR)
     dest_milestones = get_milestones_from_repo(DEST_REPO)
 
     issues = update_milestones(issues, dest_milestones)

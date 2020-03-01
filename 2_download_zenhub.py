@@ -11,6 +11,7 @@ import time
 
 import requests
 
+import _utils
 from config.config import DIR
 from config.secrets import ZENHUB_ACCESS_TOKEN
 from _logger import get_logger
@@ -85,34 +86,27 @@ def get_epic_issues(issue):
 
 def main():
 
-    issue_files = [
-        join(DIR, f)
-        for f in listdir(DIR)
-        if isfile(join(DIR, f)) and f.endswith(".json")
-    ]
+    issues = _utils.load_issues(DIR)
 
-    for f in issue_files:
-        with open(f, "r") as fin:
+    for issue in issues:
 
-            issue = json.loads(fin.read())
+        time.sleep(.6)  # zenhub rate limit is 100 requests/minute
 
-            time.sleep(.6)  # zenhub rate limit is 100 requests/minute
+        try:
+            issue = get_zenhub_issue(issue)
+        except:
+            issue["migration"]["zenhub_downloaded"] = False
+            logger.error(f)
+            continue
 
-            try:
-                issue = get_zenhub_issue(issue)
-            except:
-                issue["migration"]["zenhub_downloaded"] = False
-                logger.error(f)
-                continue
+        if issue["is_epic"]:
+            get_epic_issues(issue)
 
-            if issue["is_epic"]:
-                get_epic_issues(issue)
+        fname = issue["path"]
 
-            fname = issue["path"]
-
-            with open(fname, "w") as fout:
-                logger.info(f"{issue['repo_name']} {issue['number']}")
-                fout.write(json.dumps(issue))
+        with open(fname, "w") as fout:
+            logger.info(f"{issue['repo_name']} {issue['number']}")
+            fout.write(json.dumps(issue))
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ from os import listdir
 from os.path import isfile, join
 import pdb
 
+import _utils
 from config.config import DIR
 
 from _logger import get_logger
@@ -42,25 +43,9 @@ def build_payload(issue):
     return payload
 
 
-def load_issues(source_dir):
-    issues = []
-
-    fnames = [
-        join(source_dir, f)
-        for f in listdir(source_dir)
-        if isfile(join(source_dir, f)) and f.endswith(".json")
-    ]
-
-    for fname in fnames:
-        with open(fname, "r") as fin:
-            issue = json.loads(fin.read())
-            issues.append(issue)
-
-    return issues
-
 
 def main():
-    issues = load_issues(DIR)
+    issues = _utils.load_issues(DIR)
 
     for issue in issues:
         issue["migration"]["github_payload"] = build_payload(issue)

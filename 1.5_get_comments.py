@@ -10,6 +10,7 @@ import pdb
 
 import requests
 
+import _utils
 from config.config import DIR, DEST_REPO
 from config.secrets import GITHUB_USER, GITHUB_PASSWORD
 
@@ -49,25 +50,8 @@ def get_comments(repo, issue_number):
     return res.json()
 
 
-def load_issues(source_dir):
-    issues = []
-
-    fnames = [
-        join(source_dir, f)
-        for f in listdir(source_dir)
-        if isfile(join(source_dir, f)) and f.endswith(".json")
-    ]
-
-    for fname in fnames:
-        with open(fname, "r") as fin:
-            issue = json.loads(fin.read())
-            issues.append(issue)
-
-    return issues
-
-
 def main():
-    issues = load_issues(DIR)
+    issues = _utils.load_issues(DIR)
 
     for issue in issues:
         issue["comments"] = get_comments(issue["repo_name"], issue["number"])
