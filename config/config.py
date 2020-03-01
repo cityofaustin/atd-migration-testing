@@ -1,7 +1,7 @@
 DIR = "data"
 LABEL_FILE = "migration_label_tracking.csv"
-DEST_REPO = "atd-migration-testing"
-DEST_REPO_ID = 235453293 # atd-migration-testing
+DEST_REPO = "atd-monorepo-testing"
+DEST_REPO_ID = 244223631 # atd-migration-testing
 WORKSPACE_ID = "5caf7dc6ecad11531cc418ef" # DTS ZENHUB Workspace
 
 SOURCE_REPOS = [
@@ -29,7 +29,9 @@ SOURCE_REPOS = [
     # {"id" : 209419491, "name" : "atd-micromobility-aggregation-privacy"},
     # {"id" : 213555617, "name" : "atd-airflow"},
     # {"id" : 232883213, "name" : "atd-mds"},
-    # {"id" : 235453293, "name" : "atd-migration-testing"},
+    # {"id" : 235453293, "name" : "atd-monorepo-migration"},
+    # {"id" : 244223631, "name" : "atd-monorepo-testing"},
+    
 ]
 
 
