@@ -38,6 +38,7 @@ def update_releases(releases, lookup):
             issue_number = issue["issue_number"]
             key = f"{repo_id}${issue_number}"
             issue["issue_number"] = lookup[key].get("new_issue_number")
+            issue["repo_id"] = DEST_REPO_ID
     
     return releases
 
