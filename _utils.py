@@ -13,7 +13,6 @@ def load_issues(source_dir):
 
     for fname in fnames:
         with open(fname, "r") as fin:
-            print(fname)
             issue = json.loads(fin.read())
             issues.append(issue)
 
