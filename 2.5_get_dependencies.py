@@ -59,8 +59,8 @@ def main():
         repo_id = repo["id"]
         res = zenhub_request(repo_id)
         
-        if not res:
-            logger.error(url)
+        if res == None:
+            logger.error(repo_id)
 
         all_dependencies.extend(res["dependencies"])
     

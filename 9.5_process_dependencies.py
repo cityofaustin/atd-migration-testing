@@ -7,6 +7,7 @@ update the depencies with the new issue number and new repo id
 write missing dependencies to a file.
 
 write a new dependencies file which can serve as a zenhub dependency payload.
+this output file drops dependency issues which were not found (and presumably closed) - they will not be migrated
 """
 
 
@@ -22,6 +23,22 @@ from _logger import get_logger
 SOURCE_FILE = "dependencies.json"
 DEST_FILE = "dependencies_with_new_issue_numbers.json"
 MISSING_DEPEND_FILE = "missing_dependency_issues.json"
+
+
+def drop_null_dependencies(depends):
+    new_depends = []
+
+    for d in depends:
+        migrate = True
+        for key in d.keys():
+            issue_number = d[key]["issue_number"]
+            if not issue_number:
+                migrate = False
+
+        if migrate:
+            new_depends.append(d)
+
+    return new_depends
 
 
 def build_new_dependencies(depends, lookup):
@@ -91,6 +108,8 @@ def main():
 
     # build new dependencies file
     depends = build_new_dependencies(depends, d_lookup)
+
+    depends = drop_null_dependencies(depends)
 
     with open(DEST_FILE, "w") as fout:
         fout.write(json.dumps(depends))
