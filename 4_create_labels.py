@@ -140,7 +140,7 @@ def create_label(label, repo_name):
     }
 
     res = requests.post(url, json=payload, auth=(GITHUB_USER, GITHUB_PASSWORD))
-
+    
     res.raise_for_status()
 
     logger.info(f"{payload['name']}")
