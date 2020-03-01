@@ -98,6 +98,6 @@ def main():
 
         
 if __name__ == "__main__":
-    logger = get_logger("process_dependencies")
+    logger = get_logger("process_releases")
     main()
 
