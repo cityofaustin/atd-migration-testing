@@ -104,7 +104,7 @@ def main():
                 res = zenhub_request(DEST_REPO_ID, issue_number, payload)
                 
                 if not res:
-                    logger.error(issue["path"])
+                    logger.error(f"ERROR: {issue['path']}")
                     issue["migration"]["epic_created"] = False
                 else:
                     logger.info(issue["path"])
