@@ -86,7 +86,7 @@ def main():
         res = zenhub_request(d)
 
         if not res:
-            logger.error(d)
+            logger.error(f"ERROR: {d}")
         else:
             logger.info(d)
 
