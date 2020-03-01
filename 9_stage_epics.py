@@ -1,4 +1,9 @@
 """
+Traverse issues and update epics with the new issue IDs of their child issues.
+
+If the child issue is not found, write it to missing_epic_issues.json.
+
+
 https://github.com/ZenHubIO/API#convert-an-epic-to-an-issue
 
 build a list of all epics
@@ -26,6 +31,8 @@ from config.config import DIR, DEST_REPO, DEST_REPO_ID
 
 from _logger import get_logger
 
+MISSING_CHILDREN_FILE = "missing_epic_issues.json"
+
 def write_issue(issue, dest):
     fname = issue["path"]
 
@@ -36,10 +43,11 @@ def write_issue(issue, dest):
 
 
 def main():
+    missing_epic_issues = []
     child_issues = {}
 
     issues = _utils.load_issues(DIR)
-    
+
     # iterate through all issues, identify epics, and collect their child issues
     for issue in issues:
         if not issue.get("is_epic"):
@@ -58,8 +66,6 @@ def main():
             issue_number = issue["migration"].get("new_issue_number")
             
             if not issue_number:
-                issue_number = 9999999
-                continue
                 raise Exception(f"{key} does not have a new github issue number!")
 
             child_issues[key]["new_issue_number"] = issue_number
@@ -73,14 +79,21 @@ def main():
             repo_id = child_issue["repo_id"]
             issue_number = child_issue["issue_number"]
             key = f"{repo_id}${issue_number}"
+            new_issue_number = child_issues[key].get("new_issue_number")
+            child_issue["new_issue_number"] = new_issue_number
 
-            if key in child_issues:
-                new_issue_number = child_issues[key].get("new_issue_number")
-                child_issue["new_issue_number"] = new_issue_number
+            if not new_issue_number:
+                # child issue has not been processed, it's probably a closed issue
+                # which we're not migrating
+                missing_epic_issues.append({"repo_id" : child_issue["repo_id"], "issue_number" : child_issue["issue_number"]})                
 
         # write update issue to file
         issue["migration"]["epics_staged"] = True
         write_issue(issue, DIR)
+
+    with open(MISSING_CHILDREN_FILE, "w") as fout:
+        fout.write(json.dumps(missing_epic_issues))
+
 
 if __name__ == "__main__":
     logger = get_logger("stage_epics")
