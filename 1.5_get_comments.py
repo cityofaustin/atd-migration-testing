@@ -57,6 +57,7 @@ def main():
         issue["comments"] = get_comments(issue["repo_name"], issue["number"])
         issue["comments"] = parse_comments(issue["comments"])
         issue["migration"]["comments_retreived"] = True
+        logger.info(issue["number"])
         write_issue(issue, DEST_REPO)
 
 if __name__ == "__main__":
