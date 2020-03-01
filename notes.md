@@ -1,15 +1,19 @@
 # TODO:
+- it would seem that the atd-monorepo-testing is not ready to accept labels via api
+- not sure if depency output works, since we're dropping nulls. need to test with actual created issues
+- make sure all releases already exist. yeesh
+- close source issues?
+- don't process issues with the "migrated" label
 - Do we have all the repos??
 - filter out epics, pipelines not in our main workspace
 - get closed issues that are in epics
 - comments?
-- setting of dependencies?
+- we're not going to fetch closed dependencies, ok??
 - what about linked PRs?
 - validate/lookup milestones
-- create special "migrated" label
 - how to handle miletsones that don't exist in dest?
 - you're nulling out assignees for testing! 
-- you can't apply the migrated label to migrated labels because they won't have the "product" labels???
+- need to warn folks that they're going to get a shitload of notifications
 
 ## Labels
 Update this sheet for the label mapping:
@@ -32,15 +36,22 @@ FLOW:
 - set a special migrated label!
 
 
-## fields
-- title
-- body
-- assignee
-- estimate
-- epic
-- old url
-- new url
-- milestone
-- pipeline
-- release
-- attachements?
+## TODO
+
+### GITHUB
+-[x] title 
+-[x] body
+-[x] assignee
+-[x] old url
+-[x] new url
+-[x] milestone
+-[x] comments
+-[x] labels
+
+
+### ZENHUB
+- estimate // need to set
+- epic // need to create
+- dependency // need to create
+- pipeline // need to set
+- release // need to set
