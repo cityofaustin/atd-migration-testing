@@ -2,8 +2,8 @@ DIR = "data"
 LABEL_FILE = "migration_label_tracking.csv"
 DEST_REPO = "atd-monorepo-testing"
 DEST_REPO_ID = 244223631 # atd-monorepo-testing
-WORKSPACE_ID = "5caf7dc6ecad11531cc418ef" # DTS ZENHUB Workspace
-DEST_WORKSPACE_ID = "5e5c2b60f434330225542b02" # atd-monorepo-testing
+# WORKSPACE_ID = "5caf7dc6ecad11531cc418ef" # DTS ZENHUB Workspace
+WORKSPACE_ID = "5e5c2b60f434330225542b02" # atd-monorepo-testing
 
 SOURCE_REPOS = [
     # {"id" : 55646931, "name" : "atd-data-and-performance"},
