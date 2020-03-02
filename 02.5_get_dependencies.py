@@ -13,9 +13,10 @@ from _logger import get_logger
 
 outfile = "dependencies.json"
 
+
 def zenhub_request(repo_id):
     url = f"https://api.zenhub.io/p1/repositories/{repo_id}/dependencies/"
-    
+
     params = {"access_token": ZENHUB_ACCESS_TOKEN}
 
     try:
@@ -58,15 +59,16 @@ def main():
     for repo in SOURCE_REPOS:
         repo_id = repo["id"]
         res = zenhub_request(repo_id)
-        
+
         if res == None:
             logger.error(repo_id)
 
         all_dependencies.extend(res["dependencies"])
-    
+
     with open(outfile, "w") as fout:
         fout.write(json.dumps(all_dependencies))
-        
+
+
 if __name__ == "__main__":
     logger = get_logger("get_dependencies")
     main()

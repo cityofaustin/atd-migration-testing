@@ -23,6 +23,7 @@ def convert_to_dict(releases):
 
     return new
 
+
 def zenhub_request(url):
 
     params = {"access_token": ZENHUB_ACCESS_TOKEN}
@@ -61,7 +62,7 @@ def zenhub_request(url):
 
 
 def main():
-    
+
     releases = []
 
     # get all releases (there will be duplicates, because multiple repos can hold the same release)
@@ -69,7 +70,7 @@ def main():
         repo_id = repo["id"]
         url = f"https://api.zenhub.io/p1/repositories/{repo_id}/reports/releases"
         res = zenhub_request(url)
-        
+
         if res == None:
             logger.error(repo_id)
 
@@ -80,7 +81,7 @@ def main():
     # get all issues in a release
     for r_id in releases.keys():
         print(releases[r_id]["title"])
-        url = f"https://api.zenhub.io/p1/reports/release/{r_id}/issues"    
+        url = f"https://api.zenhub.io/p1/reports/release/{r_id}/issues"
         res = zenhub_request(url)
 
         if res == None:
@@ -90,6 +91,7 @@ def main():
 
     with open(outfile, "w") as fout:
         fout.write(json.dumps(releases))
+
 
 if __name__ == "__main__":
     logger = get_logger("get_releases")

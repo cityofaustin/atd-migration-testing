@@ -79,7 +79,6 @@ def get_milestones_from_repo(repo_name):
     return milestones
 
 
-
 def main():
     issues = _utils.load_issues(DIR)
     dest_milestones = get_milestones_from_repo(DEST_REPO)

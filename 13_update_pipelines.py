@@ -26,7 +26,7 @@ def zenhub_request(repo_id, workspace_id, issue_number, payload):
     time.sleep(.6)
 
     url = f"https://api.zenhub.io/p2/workspaces/{workspace_id}/repositories/{repo_id}/issues/{issue_number}/moves"
-    
+
     params = {"access_token": ZENHUB_ACCESS_TOKEN}
 
     try:
@@ -76,18 +76,30 @@ def get_test_pipelines():
     # bob = res.json()
     # stu = [{"id" : pipe["id"], "name" : pipe["name"]} for pipe in bob["pipelines"]]
     # return None
-    return [{'id': '5e5c2b60f43433474f542afc', 'name': 'New Issues'}, {'id': '5e5c2b60f434332f28542afd', 'name': 'Icebox'}, {'id': '5e5c3f0c71016ea705f1e2c2', 'name': 'Needs Scoping'}, {'id': '5e5c2b60f43433db7a542afe', 'name': 'Backlog'}, {'id': '5e5c3f1d71016ecee7f1e2c7', 'name': 'On Deck'}, {'id': '5e5c3f3771016eb178f1e2ce', 'name': 'Blocked'}, {'id': '5e5c2b60f434331a05542aff', 'name': 'In Progress'}, {'id': '5e5c3f3b71016ed31cf1e2d1', 'name': 'Recurring'}, {'id': '5e5c2b60f434333d31542b00', 'name': 'Review/QA'}, {'id': '5e5c3f5271016e3c77f1e2da', 'name': 'Ready to Deploy'}]
+    return [
+        {"id": "5e5c2b60f43433474f542afc", "name": "New Issues"},
+        {"id": "5e5c2b60f434332f28542afd", "name": "Icebox"},
+        {"id": "5e5c3f0c71016ea705f1e2c2", "name": "Needs Scoping"},
+        {"id": "5e5c2b60f43433db7a542afe", "name": "Backlog"},
+        {"id": "5e5c3f1d71016ecee7f1e2c7", "name": "On Deck"},
+        {"id": "5e5c3f3771016eb178f1e2ce", "name": "Blocked"},
+        {"id": "5e5c2b60f434331a05542aff", "name": "In Progress"},
+        {"id": "5e5c3f3b71016ed31cf1e2d1", "name": "Recurring"},
+        {"id": "5e5c2b60f434333d31542b00", "name": "Review/QA"},
+        {"id": "5e5c3f5271016e3c77f1e2da", "name": "Ready to Deploy"},
+    ]
+
 
 def sort_issues(issues):
     # sort all issues by their position
     unsorted_issues = []
-    
+
     for issue in issues:
         issue_number = issue.get("migration").get("new_issue_number")
         position = issue.get("migration").get("pipeline").get("position")
-        unsorted_issues.append ({"position" : position, "data" : issue })
-    
-    return sorted(unsorted_issues, key=lambda k: k["position"]) 
+        unsorted_issues.append({"position": position, "data": issue})
+
+    return sorted(unsorted_issues, key=lambda k: k["position"])
 
 
 def replace_pipe(pipe_map, pipe_name):
@@ -96,8 +108,9 @@ def replace_pipe(pipe_map, pipe_name):
             return pipe.get("id")
     return None
 
+
 def main():
-    
+
     # test only
     test_pipes = get_test_pipelines()
 
@@ -109,16 +122,16 @@ def main():
         issue = issue_element.get("data")
         issue_number = issue.get("migration").get("new_issue_number")
         pos = issue.get("migration").get("pipeline").get("position")
-        
+
         # TODO: TEST ONLY. Prod just use existing pipeline ID
         # pipe_id = issue.get("migration").get("pipeline").get("pipeline_id")
         pipe_name = issue.get("migration").get("pipeline").get("pipeline_name")
         pipe_id = replace_pipe(test_pipes, pipe_name)
 
-        payload = {"pipeline_id" : pipe_id, "position" : pos}
-        
+        payload = {"pipeline_id": pipe_id, "position": pos}
+
         res = zenhub_request(DEST_REPO_ID, WORKSPACE_ID, issue_number, payload)
-        
+
         if not res:
             logger.error(f"ERROR: {issue['path']}")
             issue["migration"]["pipeline_processed"] = False
@@ -127,7 +140,8 @@ def main():
             issue["migration"]["pipeline_processed"] = True
 
         write_issue(issue, DIR)
-    
+
+
 if __name__ == "__main__":
     logger = get_logger("update_pipelines")
     main()

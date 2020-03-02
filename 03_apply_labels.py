@@ -37,7 +37,7 @@ def map_repos(labels, repo_name, repo_map):
 
 def map_labels(labels, label_lookup):
     new_labels = []
-
+    # TODO handle map_append vs map
     for label in labels:
         if label in label_lookup:
             logger.info(f"{label} >> {label_lookup[label]}")
@@ -66,7 +66,7 @@ def build_lookup(label_map):
 def main():
     with open(LABEL_FILE, "r") as fin:
         reader = csv.DictReader(fin)
-        label_map = [row for row in reader if row["action"] == "map"]
+        label_map = [row for row in reader if "map" in row["action"]]
 
         label_lookup = build_lookup(label_map)
 

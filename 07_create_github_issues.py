@@ -29,8 +29,8 @@ def update_issue(issue):
     payload = {
         "body": issue["migration"]["source_body_update"],
         "labels": issue["labels"],
-        "state" : "closed", # close migrated issue
-        "milesone" : None # clear milestone from migrated issue
+        "state": "closed",  # close migrated issue
+        "milesone": None,  # clear milestone from migrated issue
     }
 
     # append special "migrated" label
@@ -60,7 +60,6 @@ def create_issue(issue, repo):
 
     logger.info(f"{repo} {res.json()['number']}")
     return res.json()
-
 
 
 def main():

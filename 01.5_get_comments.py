@@ -29,13 +29,15 @@ def write_issue(issue, dest):
 def parse_comments(comments):
     # extract comment and prepend user name
     parsed = []
-    
+
     for comment in comments:
         body = comment["body"]
         user = comment["user"]["login"]
-        stamp = comment["updated_at"][0:10] # lazily just grabbing the date from the timestamp
+        stamp = comment["updated_at"][
+            0:10
+        ]  # lazily just grabbing the date from the timestamp
         body = f"*From {user} on {stamp}*:\n\n{body}"
-        parsed.append({"uploaded" : False, "body" : body})
+        parsed.append({"uploaded": False, "body": body})
 
     return parsed
 
@@ -54,7 +56,10 @@ def main():
     issues = _utils.load_issues(DIR)
 
     for issue in issues:
-        if not issue.get("migration").get("comments_retreived") and issue.get("repo_id") != 140626918:
+        if (
+            not issue.get("migration").get("comments_retreived")
+            and issue.get("repo_id") != 140626918
+        ):
             """
             we skip comments atd-data-tech
             The issues already exist, but we need to connect the dependencies, etc.
@@ -65,6 +70,7 @@ def main():
 
         logger.info(issue["number"])
         write_issue(issue, DEST_REPO)
+
 
 if __name__ == "__main__":
     logger = get_logger("download_comments")

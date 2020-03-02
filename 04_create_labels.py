@@ -42,7 +42,7 @@ def get_labels_from_csv(fname):
                 "description": label["description"],
             }
             for label in reader
-            if label["action"] != "map"
+            if "map" not in label["action"]
         }
 
 
@@ -140,10 +140,8 @@ def create_label(label, repo_name):
     }
 
     res = requests.post(url, json=payload, auth=(GITHUB_USER, GITHUB_PASSWORD))
-    
-    res.raise_for_status()
 
-    logger.info(f"{payload['name']}")
+    res.raise_for_status()
 
     return None
 

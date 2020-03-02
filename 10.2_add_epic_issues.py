@@ -44,7 +44,7 @@ def zenhub_request(repo_id, issue_number, issues):
     time.sleep(.6)
 
     url = f"https://api.zenhub.io/p1/repositories/{repo_id}/issues/{issue_number}/update_issues"
-    
+
     params = {"access_token": ZENHUB_ACCESS_TOKEN}
 
     try:
@@ -80,7 +80,7 @@ def zenhub_request(repo_id, issue_number, issues):
             print(e)
             return None
 
-    return True # no data is returned from a 200 status when creating epics
+    return True  # no data is returned from a 200 status when creating epics
 
 
 def main():
@@ -88,14 +88,14 @@ def main():
     issues = _utils.load_issues(DIR)
 
     for issue in issues:
-        
+
         if issue.get("is_epic"):
 
             # new issue number of issue that will be converted to epic
             issue_number = issue["migration"].get("new_issue_number")
-            
-            payload = {"add_issues" : []}
-            
+
+            payload = {"add_issues": []}
+
             for e in issue["epic_issues"]:
                 if e.get("repo_id") == 140626918 and issue.get("repo_id") == 140626918:
                     """
@@ -108,11 +108,13 @@ def main():
                     continue
 
                 if e.get("new_issue_number"):
-                    payload["issues"].append({"repo_id" : DEST_REPO_ID, "issue_number" : e["new_issue_number"]})
-            
+                    payload["issues"].append(
+                        {"repo_id": DEST_REPO_ID, "issue_number": e["new_issue_number"]}
+                    )
+
             if payload["add_issues"]:
                 res = zenhub_request(DEST_REPO_ID, issue_number, payload)
-                
+
                 if not res:
                     logger.error(f"ERROR: {issue['path']}")
                     issue["migration"]["epic_created"] = False
@@ -123,7 +125,7 @@ def main():
 
                 write_issue(issue, DIR)
 
-    
+
 if __name__ == "__main__":
     logger = get_logger("convert_epics")
     main()

@@ -53,7 +53,7 @@ def build_new_dependencies(depends, lookup):
             d[key]["repo_id"] = DEST_REPO_ID
 
     return depends
-    
+
 
 def build_d_lookup(depends):
     lookup = {}
@@ -64,7 +64,7 @@ def build_d_lookup(depends):
             key = f"{repo_id}${issue_number}"
             lookup[key] = {}
             lookup[key]["new_issue_number"] = None
-    
+
     return lookup
 
 
@@ -91,15 +91,15 @@ def main():
         repo_id = issue.get("repo_id")
         issue_number = issue.get("number")
         key = f"{repo_id}${issue_number}"
-        
+
         if key in d_lookup:
             new_issue_number = issue["migration"].get("new_issue_number")
-            
+
             if not new_issue_number:
                 # issue has apparently not been created in github
                 logger.error(key)
                 raise Exception(f"New {issue_number} does not exist in github!")
-            
+
             d_lookup[key]["new_issue_number"] = new_issue_number
 
         else:
@@ -114,12 +114,10 @@ def main():
     with open(DEST_FILE, "w") as fout:
         fout.write(json.dumps(depends))
 
-
     with open(MISSING_DEPEND_FILE, "w") as fout:
         fout.write(json.dumps(missing_dependency_issues))
 
-        
+
 if __name__ == "__main__":
     logger = get_logger("process_dependencies")
     main()
-

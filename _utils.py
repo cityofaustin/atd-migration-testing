@@ -2,6 +2,7 @@ import json
 from os import listdir, remove
 from os.path import isfile, join
 
+
 def load_issues(source_dir):
     issues = []
 

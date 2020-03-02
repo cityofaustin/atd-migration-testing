@@ -29,17 +29,19 @@ from _logger import get_logger
 
 DEPEND_FILE = "dependencies_with_new_issue_numbers.json"
 
+
 def load(fname):
     with open(fname, "r") as fin:
         d = json.loads(fin.read())
     return d
 
+
 def zenhub_request(d):
     # limit requests to 100/min
     time.sleep(.6)
-    
+
     url = f"https://api.zenhub.io/p1/dependencies"
-    
+
     params = {"access_token": ZENHUB_ACCESS_TOKEN}
 
     try:
@@ -81,7 +83,7 @@ def zenhub_request(d):
 def main():
 
     dp = load(DEPEND_FILE)
-    
+
     for d in dp:
         res = zenhub_request(d)
 
@@ -90,7 +92,7 @@ def main():
         else:
             logger.info(d)
 
-    
+
 if __name__ == "__main__":
     logger = get_logger("update_dependencies")
     main()

@@ -33,6 +33,7 @@ from _logger import get_logger
 
 MISSING_CHILDREN_FILE = "missing_epic_issues.json"
 
+
 def write_issue(issue, dest):
     fname = issue["path"]
 
@@ -57,14 +58,14 @@ def main():
             repo_id = child_issue["repo_id"]
             issue_number = child_issue["issue_number"]
             key = f"{repo_id}${issue_number}"
-            child_issues[key] = {"repo_id" : repo_id, "issue_number" : issue_number}
+            child_issues[key] = {"repo_id": repo_id, "issue_number": issue_number}
 
     # iterate through all issues and identify new issue numbers of child issues
     for issue in issues:
         key = f"{issue['repo_id']}${issue['number']}"
         if key in child_issues:
             issue_number = issue["migration"].get("new_issue_number")
-            
+
             if not issue_number:
                 raise Exception(f"{key} does not have a new github issue number!")
 
@@ -85,7 +86,12 @@ def main():
             if not new_issue_number:
                 # child issue has not been processed, it's probably a closed issue
                 # which we're not migrating
-                missing_epic_issues.append({"repo_id" : child_issue["repo_id"], "issue_number" : child_issue["issue_number"]})                
+                missing_epic_issues.append(
+                    {
+                        "repo_id": child_issue["repo_id"],
+                        "issue_number": child_issue["issue_number"],
+                    }
+                )
 
         # write update issue to file
         issue["migration"]["epics_staged"] = True
@@ -98,5 +104,3 @@ def main():
 if __name__ == "__main__":
     logger = get_logger("stage_epics")
     main()
-
-

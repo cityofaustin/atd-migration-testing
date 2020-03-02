@@ -43,7 +43,6 @@ def build_payload(issue):
     return payload
 
 
-
 def main():
     issues = _utils.load_issues(DIR)
 

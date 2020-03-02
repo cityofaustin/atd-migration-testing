@@ -24,9 +24,9 @@ def write_issue(issue, dest):
 def zenhub_request_get(repo_id, workspace_id):
     # limit requests to 100/min
     time.sleep(.6)
-    
+
     url = f"https://api.zenhub.io/p2/workspaces/{workspace_id}/repositories/{repo_id}/board"
-    
+
     params = {"access_token": ZENHUB_ACCESS_TOKEN}
 
     try:
@@ -77,9 +77,22 @@ def get_board_issues():
     # stu = [{"id" : pipe["id"], "name" : pipe["name"]} for pipe in bob["pipelines"]]
     return None
 
+
 def get_pipelines():
     # test board
-    return [{'id': '5e5c2b60f43433474f542afc', 'name': 'New Issues'}, {'id': '5e5c2b60f434332f28542afd', 'name': 'Icebox'}, {'id': '5e5c3f0c71016ea705f1e2c2', 'name': 'Needs Scoping'}, {'id': '5e5c2b60f43433db7a542afe', 'name': 'Backlog'}, {'id': '5e5c3f1d71016ecee7f1e2c7', 'name': 'On Deck'}, {'id': '5e5c3f3771016eb178f1e2ce', 'name': 'Blocked'}, {'id': '5e5c2b60f434331a05542aff', 'name': 'In Progress'}, {'id': '5e5c3f3b71016ed31cf1e2d1', 'name': 'Recurring'}, {'id': '5e5c2b60f434333d31542b00', 'name': 'Review/QA'}, {'id': '5e5c3f5271016e3c77f1e2da', 'name': 'Ready to Deploy'}]
+    return [
+        {"id": "5e5c2b60f43433474f542afc", "name": "New Issues"},
+        {"id": "5e5c2b60f434332f28542afd", "name": "Icebox"},
+        {"id": "5e5c3f0c71016ea705f1e2c2", "name": "Needs Scoping"},
+        {"id": "5e5c2b60f43433db7a542afe", "name": "Backlog"},
+        {"id": "5e5c3f1d71016ecee7f1e2c7", "name": "On Deck"},
+        {"id": "5e5c3f3771016eb178f1e2ce", "name": "Blocked"},
+        {"id": "5e5c2b60f434331a05542aff", "name": "In Progress"},
+        {"id": "5e5c3f3b71016ed31cf1e2d1", "name": "Recurring"},
+        {"id": "5e5c2b60f434333d31542b00", "name": "Review/QA"},
+        {"id": "5e5c3f5271016e3c77f1e2da", "name": "Ready to Deploy"},
+    ]
+
 
 def main():
     test_pipes = get_pipelines()
@@ -102,15 +115,15 @@ def main():
 
         for pipe in pipelines.get("pipelines"):
             for issue in pipe.get("issues"):
-                
+
                 key = f"{repo['id']}${issue['issue_number']}"
-                
+
                 issues_with_positions[key] = {
-                    "old_issue_number" : issue['issue_number'],
-                    "pipeline_id" : pipe.get("id"),
-                    "pipeline_name" : pipe.get("name"),
-                    "position" : issue.get("position"),
-                    "repo_id" : DEST_REPO_ID
+                    "old_issue_number": issue["issue_number"],
+                    "pipeline_id": pipe.get("id"),
+                    "pipeline_name": pipe.get("name"),
+                    "position": issue.get("position"),
+                    "repo_id": DEST_REPO_ID,
                 }
 
     # assign positions to issues
@@ -118,7 +131,7 @@ def main():
 
     for issue in issues:
         repo_id = issue.get("repo_id")
-        
+
         if repo["id"] == 140626918:
             """
             we skip in atd-data-tech
@@ -132,7 +145,7 @@ def main():
         issue["migration"]["pipeline"] = issues_with_positions.get(key)
         write_issue(issue, DIR)
 
-    
+
 if __name__ == "__main__":
     logger = get_logger("apply_pipeline_positions")
     main()

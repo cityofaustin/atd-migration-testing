@@ -25,9 +25,9 @@ def write_issue(issue, dest):
 def zenhub_request(repo_id, issue_number, payload):
     # limit requests to 100/min
     time.sleep(.6)
-    
+
     url = f"https://api.zenhub.io/p1/repositories/{repo_id}/issues/{issue_number}/estimate"
-    
+
     params = {"access_token": ZENHUB_ACCESS_TOKEN}
 
     try:
@@ -76,7 +76,7 @@ def main():
         if est:
             issue_number = issue.get("migration").get("new_issue_number")
             if issue_number:
-                payload = {"estimate" : est["value"]}
+                payload = {"estimate": est["value"]}
 
                 res = zenhub_request(DEST_REPO_ID, issue_number, payload)
 
@@ -89,7 +89,7 @@ def main():
 
                 write_issue(issue, DIR)
 
-    
+
 if __name__ == "__main__":
     logger = get_logger("set_estimates")
     main()

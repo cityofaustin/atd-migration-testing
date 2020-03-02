@@ -47,7 +47,7 @@ def main():
             # this should never happen. all issue should exist by now
             logger.error(f"Error: {issue['path']}")
             continue
-        
+
         if issue.get("repo_id") == 140626918:
             """
             We do not create comments for issues from atd-data-tech,
@@ -64,6 +64,7 @@ def main():
                     res = create_comment(issue_number, DEST_REPO, comment["body"])
                     comment["uploaded"] = True
                     write_issue(issue, DEST_REPO)
+
 
 if __name__ == "__main__":
     logger = get_logger("github_create_comments")
