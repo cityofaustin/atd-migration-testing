@@ -88,7 +88,18 @@ def main():
 
     for repo in SOURCE_REPOS:
         # fetch all the issues in the workspace to get issue positions
+
+        if repo["id"] == 140626918:
+            """
+            we skip in atd-data-tech
+            Those issue will not have pipelines updated,
+            but do need to reconnect the dependencies, etc.
+            """
+            print("yep")
+            continue
+
         pipelines = zenhub_request_get(repo["id"], WORKSPACE_ID)
+
         for pipe in pipelines.get("pipelines"):
             for issue in pipe.get("issues"):
                 
@@ -107,6 +118,15 @@ def main():
 
     for issue in issues:
         repo_id = issue.get("repo_id")
+        
+        if repo["id"] == 140626918:
+            """
+            we skip in atd-data-tech
+            Those issue will not have pipelines updated,
+            but do need to reconnect the dependencies, etc.
+            """
+            continue
+
         issue_number = issue.get("number")
         key = f"{repo_id}${issue_number}"
         issue["migration"]["pipeline"] = issues_with_positions.get(key)

@@ -54,9 +54,15 @@ def main():
     issues = _utils.load_issues(DIR)
 
     for issue in issues:
-        issue["comments"] = get_comments(issue["repo_name"], issue["number"])
-        issue["comments"] = parse_comments(issue["comments"])
-        issue["migration"]["comments_retreived"] = True
+        if not issue.get("migration").get("comments_retreived") and issue.get("repo_id") != 140626918:
+            """
+            we skip comments atd-data-tech
+            The issues already exist, but we need to connect the dependencies, etc.
+            """
+            issue["comments"] = get_comments(issue["repo_name"], issue["number"])
+            issue["comments"] = parse_comments(issue["comments"])
+            issue["migration"]["comments_retreived"] = True
+
         logger.info(issue["number"])
         write_issue(issue, DEST_REPO)
 
