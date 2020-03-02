@@ -1,6 +1,8 @@
 """
 Make sure all labels are created in the destination repo.
 
+Note that label replacements have already been mapped in a previous script.
+
 We do this by:
 1. Downloading all labels in the destination repo
 2. Downloading all labels in the source repo (which gives us name/color/description)
@@ -28,7 +30,7 @@ def get_missing_labels(dest_labels, label_defs, issue_labels):
     return [
         label_defs[label]
         for label in label_defs.keys()
-        if label not in dest_labels and label in issue_labels
+        if label.lower() not in [l.lower() for l in dest_labels]
     ]
 
 
@@ -167,8 +169,11 @@ def main():
     create_labels = get_missing_labels(dest_labels, source_labels, issue_labels)
 
     for label in create_labels:
-        logger.info(f"{label['name']}")
-        create_label(label, DEST_REPO)
+        try:
+            create_label(label, DEST_REPO)
+            logger.info(f"{label['name']}")
+        except:
+            logger.error(f"ERROR: {label['name']}")
 
 
 if __name__ == "__main__":
