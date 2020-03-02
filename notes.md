@@ -1,4 +1,6 @@
 # TODO:
+- drop estimate and sprints from migrated issues :/
+- make sure you're gracefully handling znehub failes on dependency, epics, releases setting
 - on last dry run, some product labels were not colored correctly. looks like they were created by default. that's not right.
 - warehouse inventory project did not map to a product :/ < fixed
 - download new label map!

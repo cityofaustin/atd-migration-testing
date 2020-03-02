@@ -29,7 +29,8 @@ def update_issue(issue):
     payload = {
         "body": issue["migration"]["source_body_update"],
         "labels": issue["labels"],
-        "state" : "closed"
+        "state" : "closed", # close migrated issue
+        "milesone" : None # clear milestone from migrated issue
     }
 
     # append special "migrated" label
