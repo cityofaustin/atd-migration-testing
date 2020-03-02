@@ -1,5 +1,6 @@
 """
-Tag issues with product and service labels.
+Add/replace labels on issues. These changes are written back to the issue JSON
+and included in the github payload when the new issue is create.
 """
 import csv
 import json
