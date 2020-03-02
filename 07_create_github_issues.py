@@ -29,6 +29,7 @@ def update_issue(issue):
     payload = {
         "body": issue["migration"]["source_body_update"],
         "labels": issue["labels"],
+        "state" : "closed"
     }
 
     # append special "migrated" label
@@ -69,16 +70,29 @@ def main():
         if issue.get("migration").get("created_github"):
             continue
 
-        res = create_issue(issue, DEST_REPO)
-        issue["migration"]["created_github"] = True
-        issue["migration"]["new_issue_number"] = res["number"]
-        write_issue(issue, DIR)
-        issue["migration"]["source_body_update"] = update_body(
-            issue["body"], res["number"], DEST_REPO
-        )
-        res = update_issue(issue)
-        issue["migration"]["updated_source_github"] = True
-        write_issue(issue, DIR)
+        if issue.get("repo_id") == 140626918:
+            """
+            We do not create issues from atd-data-tech,
+            Because that's the repo we're migrating to,
+            But we do need to reference these isssue
+            To connect the dependencies and epics to new issues.
+            """
+            issue["migration"]["created_github"] = True
+            issue["migration"]["new_issue_number"] = issue["number"]
+            write_issue(issue, DIR)
+            continue
+        else:
+            continue
+            res = create_issue(issue, DEST_REPO)
+            issue["migration"]["created_github"] = True
+            issue["migration"]["new_issue_number"] = res["number"]
+            write_issue(issue, DIR)
+        # issue["migration"]["source_body_update"] = update_body(
+        #     issue["body"], res["number"], DEST_REPO
+        # )
+        # res = update_issue(issue)
+        # issue["migration"]["updated_source_github"] = True
+        # write_issue(issue, DIR)
 
 
 if __name__ == "__main__":
