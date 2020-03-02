@@ -82,10 +82,10 @@ def main():
 
                 if not res:
                     logger.error(f"ERROR: {issue['path']}")
-                    issue["migration"]["estiamte_set"] = False
+                    issue["migration"]["estimate_set"] = False
                 else:
                     logger.info(issue["path"])
-                    issue["migration"]["estiamte_set"] = True
+                    issue["migration"]["estimate_set"] = True
 
                 write_issue(issue, DIR)
 

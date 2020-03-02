@@ -90,13 +90,16 @@ def main():
 
     for issue in issues:
 
+        if issue["migration"].get("zenhub_downloaded"):
+            continue
+
         time.sleep(.6)  # zenhub rate limit is 100 requests/minute
 
         try:
             issue = get_zenhub_issue(issue)
         except:
             issue["migration"]["zenhub_downloaded"] = False
-            logger.error(f)
+            logger.error(f"Error: {issue['path']}")
             continue
 
         if issue["is_epic"]:
