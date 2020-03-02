@@ -38,17 +38,17 @@ Product: VZA,3D3D3D,,Product: Vision Zero in Action,map
 Product: VZA App,3D3D3D,App to manage Vision Zero in Action enforcement activities,Product: Vision Zero in Action,map
 Product: VZE,3D3D3D,,Product: Vision Zero Editor,map
 Product: VZV,3D3D3D,,Product: Vision Zero Viewer,map
-Project: Data Lake,86B1C6,ATD data lake development with UT CTR,Product: Data Lake,map
-Project: Development Review Workflow,86B1C6,Project serving Transportation Engineering,Product: Transportation Development Services,map
-Project: Mobile Signal Work Order,86B1C6,Mobile-first app for Signal Techs using React and Knack API,Product: Mobile Signal Work Orders,map
-Project: Mobility Project Database,86B1C6,,Product: Mobility Project Database,map
-Project: Residential Parking Permits,86B1C6,"Online platform for residential parking permit applications, purchases, and renewals",Product: Residential Parking Permit Digitization,map
-Project: Signs Mobile Work Orders,86B1C6,Mobile-first app for Street Signs Techs using React and Knack API,Product: Signs Mobile Work Orders,map
-Project: TDSD Phase 2,86B1C6,,Product: Transportation Development Services,map
-Project: Vision Zero Crash Data System,86B1C6,Centralize the management of ATD's Vision Zero data,Product: Vision Zero Crash Data System,map
-Project: Vision Zero Viewer,86B1C6,Public-facing interactive dashboard which displays metrics related to Vision Zero Program.,Product: Vision Zero Viewer,map
-Project: VZA App,86B1C6,App for APD to log Vision Zero in Action enforcement activities,Product: Vision Zero in Action,map
-Project: VZA Citation App,86B1C6,,Product: Vision Zero in Action,map
+Project: Data Lake,86B1C6,ATD data lake development with UT CTR,Product: Data Lake,map_append
+Project: Development Review Workflow,86B1C6,Project serving Transportation Engineering,Product: Transportation Development Services,map_append
+Project: Mobile Signal Work Order,86B1C6,Mobile-first app for Signal Techs using React and Knack API,Product: Mobile Signal Work Orders,map_append
+Project: Mobility Project Database,86B1C6,,Product: Mobility Project Database,map_append
+Project: Residential Parking Permits,86B1C6,"Online platform for residential parking permit applications, purchases, and renewals",Product: Residential Parking Permit Digitization,map_append
+Project: Signs Mobile Work Orders,86B1C6,Mobile-first app for Street Signs Techs using React and Knack API,Product: Signs Mobile Work Orders,map_append
+Project: TDSD Phase 2,86B1C6,,Product: Transportation Development Services,map_append
+Project: Vision Zero Crash Data System,86B1C6,Centralize the management of ATD's Vision Zero data,Product: Vision Zero Crash Data System,map_append
+Project: Vision Zero Viewer,86B1C6,Public-facing interactive dashboard which displays metrics related to Vision Zero Program.,Product: Vision Zero Viewer,map_append
+Project: VZA App,86B1C6,App for APD to log Vision Zero in Action enforcement activities,Product: Vision Zero in Action,map_append
+Project: VZA Citation App,86B1C6,,Product: Vision Zero in Action,map_append
 Duplicate,5F7D8C,,,ok
 Epic,3E4B9E,,,ok
 Impact: 1-Severe,FF7261,Severely impacts ATD service delivery,,ok
@@ -104,7 +104,7 @@ Project: Traffic Counts,86B1C6,This project created a new module in the Data Tra
 Project: Traffic Registry Digitization,86B1C6,This is an effort to digitize all of our street regulations in a geospatial database,,ok
 Project: TxDOT Center-to-Center,86B1C6,Establish data sharing between the City of Austin and TxDOT,,ok
 Project: Uniform & PPE Tracking,86B1C6,Project to track issuance of uniforms and protective equipment for various divisions,,ok
-Project: Warehouse Inventory,86B1C6,Identifying an inventory management solution for ATD,,ok
+Project: Warehouse Inventory,86B1C6,Identifying an inventory management solution for ATD,Product: Finance & Inventory,map_append
 Service: Apps,F2FC6D,Knack application support,,ok
 Service: Dev,F2FC6D,Infrastructure and engineering,,ok
 Service: Geo,F2FC6D,Geospatial services,,ok
