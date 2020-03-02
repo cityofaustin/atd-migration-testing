@@ -40,8 +40,16 @@ def map_labels(labels, label_lookup):
     # TODO handle map_append vs map
     for label in labels:
         if label in label_lookup:
-            logger.info(f"{label} >> {label_lookup[label]}")
-            new_labels.append(label_lookup[label])
+            dest_label_action = label_lookup[label]
+            dest_label, action = dest_label_action.split("_&_")
+            if action == "map":
+                # replace label with lookup label
+                logger.info(f"{label} >> {dest_label}")
+                new_labels.append(dest_label)
+            elif action =="map_append":
+                logger.info(f"{label} >> {dest_label}")
+                new_labels.append(label)
+                new_labels.append(dest_label)
         else:
             new_labels.append(label)
 
@@ -58,6 +66,12 @@ def build_lookup(label_map):
     for row in label_map:
         label_src = row["name"]
         label_dest = row["corresponding product label"]
+        label_action = row["action"]
+        # disgusting hack because i'm tired of writing this  migation
+        # we have to be able to distinguish between map and map/append
+        # label actions. i don't want to refactor all the code so 
+        # we're squeezing the action into the destination label_name
+        label_dest = label_dest + "_&_" + label_action
         lookup[label_src] = label_dest
 
     return lookup
