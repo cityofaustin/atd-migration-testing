@@ -44,6 +44,17 @@ def main():
         issue_number = issue.get("migration").get("new_issue_number")
 
         if not issue_number:
+            # this should never happen. all issue should exist by now
+            logger.error(f"Error: {issue['path']}")
+            continue
+        
+        if issue.get("repo_id") == 140626918:
+            """
+            We do not create comments for issues from atd-data-tech,
+            Because that's the repo we're migrating to,
+            But we do need to reference these isssue
+            To connect the dependencies and epics to new issues.
+            """
             continue
 
         # skip issues which already have comments created
