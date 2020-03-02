@@ -1,39 +1,22 @@
 # TODO:
-- it would seem that the atd-monorepo-testing is not ready to accept labels via api
+- on last dry run, some product labels were not colored correctly. looks like they were created by default. that's not right.
+- warehouse inventory project did not map to a product :/ < fixed
+- download new label map!
+- set "closed" state implemented. need to test!
+- have to link epics, dependencies and releases to atd-data-tech issues :(
+- will not link epics, dependencies, or releases to closed issues
+- heyyy are you droppping project labels?? you need to append, not replace, i think
+- close all migrated issues! have to do that before setting new pipelines!
+- some issues may not be in zenhub—must ignore
 - not sure if depency output works, since we're dropping nulls. need to test with actual created issues
 - make sure all releases already exist. yeesh
-- close source issues?
 - don't process issues with the "migrated" label
-- Do we have all the repos??
 - filter out epics, pipelines not in our main workspace
-- get closed issues that are in epics
-- comments?
 - we're not going to fetch closed dependencies, ok??
-- what about linked PRs?
-- validate/lookup milestones
-- how to handle miletsones that don't exist in dest?
-- you're nulling out assignees for testing! 
-- need to warn folks that they're going to get a shitload of notifications
 
 ## Labels
 Update this sheet for the label mapping:
 https://docs.google.com/spreadsheets/d/1pTum5oFfDpIo575zAYDPA_bdsEfoElpCO1-HzAU68wk/edit#gid=651251559
-
-
-FLOW:
-- add missing labels
-- and that all labels are mapped to products
-- only open issues!? no. migrate closed. - what about epics with closed issues???
-- get all issues and zenhub data
-- write to JSON
-- create all issues in github (milestones, labels, assignees, title, body, state)
-- each time issue is created:
-    - close/link to new issues/apply "migrated" label
-    - write to JSON
-- convert issues to epics
-- add issues to epics
-- move issuses to pipeline
-- set a special migrated label!
 
 
 ## TODO
@@ -50,8 +33,24 @@ FLOW:
 
 
 ### ZENHUB
-- estimate // need to set
-- epic // need to create
-- dependency // need to create
+- estimate // done
+- epic // good to go except missing issues derp
+- dependency // good to go except missing
 - pipeline // need to set
 - release // need to set
+
+
+
+### PRELAUNCH CHECKLIST
+- destination repo correct
+- destination repo_id correct
+- destination workspace correct
+- assignments enabled
+- test code removed from pipeline setter
+- update source github issues enabled
+
+
+download open atd-data-tech issues
+then they'll be included in the processing
+set their new_github_issue number to their issue number 
+do not create/update/comment any of them?
