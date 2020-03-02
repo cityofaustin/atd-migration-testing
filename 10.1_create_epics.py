@@ -108,8 +108,7 @@ def main():
                 issue["migration"]["epic_created"] = False
             else:
                 logger.info(issue["path"])
-
-            issue["migration"]["epic_created"] = True
+                issue["migration"]["epic_created"] = True
 
             write_issue(issue, DIR)
 
