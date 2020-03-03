@@ -30,6 +30,8 @@
 - release [done // need to remove test code]
 
 ## Misc
+- in current dry have staged epics
+- in last dry run, you have not set pipeline positiosn because you have to map pipes for testing :/
 - test epic foo
 - test attachments
 - make sure you're gracefully handling zenhub fails on dependency, epics, releases
