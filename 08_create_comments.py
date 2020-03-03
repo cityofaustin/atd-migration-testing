@@ -32,12 +32,14 @@ def create_comment(issue_number, repo, body):
 
     res.raise_for_status()
 
-    logger.info(f"{issue_number} {repo} {body}")
     return res.json()
 
 
 def main():
     issues = _utils.load_issues(DIR)
+    issue_w_coments_count = 0
+    issue_count = 0
+    comment_count = 0
 
     for issue in issues:
         # skip issues which have not been created:
@@ -64,7 +66,16 @@ def main():
                     res = create_comment(issue_number, DEST_REPO, comment["body"])
                     comment["uploaded"] = True
                     write_issue(issue, DEST_REPO)
+                    comment_count += 1
+            
+            issue_w_coments_count += 1
 
+        issue_count += 1
+            
+    
+    logger.info(f"Issues Processed: {issue_count}")
+    logger.info(f"Issues with Comments Processed: {issue_count}")
+    logger.info(f"Comments Created: {comment_count}")
 
 if __name__ == "__main__":
     logger = get_logger("github_create_comments")

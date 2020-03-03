@@ -171,7 +171,7 @@ def main():
     for label in create_labels:
         try:
             create_label(label, DEST_REPO)
-            logger.info(f"{label['name']}")
+            logger.info(f"Created {label['name']}")
         except:
             logger.error(f"ERROR: {label['name']}")
 

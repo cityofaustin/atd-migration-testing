@@ -65,6 +65,8 @@ def create_issue(issue, repo):
 def main():
     issues = _utils.load_issues(DIR)
 
+    issue_count = 0
+    created_count = 0
     for issue in issues:
         # skip issues which have already been created
         if issue.get("migration").get("created_github"):
@@ -80,13 +82,19 @@ def main():
             issue["migration"]["created_github"] = True
             issue["migration"]["new_issue_number"] = issue["number"]
             write_issue(issue, DIR)
+            issue_count += 1
             continue
         else:
-            continue
             res = create_issue(issue, DEST_REPO)
             issue["migration"]["created_github"] = True
             issue["migration"]["new_issue_number"] = res["number"]
+            issue_count += 1
+            created_count += 1
             write_issue(issue, DIR)
+    
+    logger.info(f"Issues Processed: {issue_count}")
+    logger.info(f"Issues Created: {created_count}")
+
         # issue["migration"]["source_body_update"] = update_body(
         #     issue["body"], res["number"], DEST_REPO
         # )

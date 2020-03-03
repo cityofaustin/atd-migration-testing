@@ -21,6 +21,8 @@ def get_repo(g, repo, org="cityofaustin"):
 def main():
 
     g = Github(GITHUB_USER, GITHUB_PASSWORD)
+    
+    issue_count = 0
 
     for r in SOURCE_REPOS:
         repo = get_repo(g, r["name"])
@@ -54,7 +56,8 @@ def main():
             with open(fname, "w") as fout:
                 logger.info(f"{new_issue['repo_name']} {new_issue['number']}")
                 fout.write(json.dumps(new_issue))
-
+                issue_count += 1
+    logger.info(f"Issues Processed: {issue_count}")
 
 if __name__ == "__main__":
     logger = get_logger("download_github")

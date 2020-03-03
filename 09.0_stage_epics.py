@@ -49,6 +49,10 @@ def main():
 
     issues = _utils.load_issues(DIR)
 
+    issue_count = 0
+    epic_count = 0
+    child_issue_count = 0
+
     # iterate through all issues, identify epics, and collect their child issues
     for issue in issues:
         if not issue.get("is_epic"):
@@ -73,8 +77,11 @@ def main():
 
     # update epics' child issues with their new issue numbers
     for issue in issues:
+        issue_count += 1
+
         if not issue.get("is_epic"):
             continue
+
 
         for child_issue in issue["epic_issues"]:
             repo_id = child_issue["repo_id"]
@@ -82,6 +89,7 @@ def main():
             key = f"{repo_id}${issue_number}"
             new_issue_number = child_issues[key].get("new_issue_number")
             child_issue["new_issue_number"] = new_issue_number
+            child_issue_count += 1
 
             if not new_issue_number:
                 # child issue has not been processed, it's probably a closed issue
@@ -96,10 +104,15 @@ def main():
         # write update issue to file
         issue["migration"]["epics_staged"] = True
         write_issue(issue, DIR)
+        epic_count += 1
+
+    logger.info(f"Issues Processed: {issue_count}")
+    logger.info(f"Epics Processed: {epic_count}")
+    logger.info(f"Child Issues Processed: {child_issue_count}")
 
     with open(MISSING_CHILDREN_FILE, "w") as fout:
         fout.write(json.dumps(missing_epic_issues))
-
+# logger.info(f"Issues Processed: {issue_count}")
 
 if __name__ == "__main__":
     logger = get_logger("stage_epics")

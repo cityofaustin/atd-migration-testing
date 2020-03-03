@@ -16,30 +16,36 @@ from _logger import get_logger
 
 
 def write_issues(issues, dest):
+    issue_count = 0
     for issue in issues:
         fname = issue["path"]
 
         with open(fname, "w") as fout:
             logger.info(f"{issue['repo_name']} {issue['number']}")
             fout.write(json.dumps(issue))
-    return True
+            issue_count += 1
+    return issue_count
 
 
 def update_milestones(issues, milestones):
     # map the milestone to the milestone number in the dest repo
     # if the dest repo does not have the milestone, the milestone is dropped
+    update_count = 0
+
     for issue in issues:
         m = issue.get("milestone")
         if m:
             if m in milestones:
                 issue["migration"]["milestone"] = milestones[m]["number"]
                 logger.info(f"{m}")
+                update_count += 1
             else:
                 issue["migration"]["milestone"] = None
+                logger.error(f"Milestone not found: {m}")
         else:
             issue["migration"]["milestone"] = None
 
-    return issues
+    return issues, update_count
 
 
 def get_milestones_from_repo(repo_name):
@@ -81,12 +87,14 @@ def get_milestones_from_repo(repo_name):
 
 def main():
     issues = _utils.load_issues(DIR)
+    
     dest_milestones = get_milestones_from_repo(DEST_REPO)
 
-    issues = update_milestones(issues, dest_milestones)
+    issues, update_count = update_milestones(issues, dest_milestones)
 
-    write_issues(issues, DIR)
-
+    issue_count = write_issues(issues, DIR)
+    logger.info(f"Issues Processed: {issue_count}")
+    logger.info(f"Milestones Updated: {update_count}")
 
 if __name__ == "__main__":
     logger = get_logger("set_milestones")

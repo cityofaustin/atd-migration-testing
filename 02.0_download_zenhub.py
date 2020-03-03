@@ -88,6 +88,9 @@ def main():
 
     issues = _utils.load_issues(DIR)
 
+    issue_count = 0
+    error_count = 0
+
     for issue in issues:
 
         if issue["migration"].get("zenhub_downloaded"):
@@ -100,6 +103,7 @@ def main():
         except:
             issue["migration"]["zenhub_downloaded"] = False
             logger.error(f"Error: {issue['path']}")
+            error_count += 1
             continue
 
         if issue["is_epic"]:
@@ -110,7 +114,10 @@ def main():
         with open(fname, "w") as fout:
             logger.info(f"{issue['repo_name']} {issue['number']}")
             fout.write(json.dumps(issue))
+            issue_count += 1
 
+    logger.info(f"Issues Processed: {issue_count}")
+    logger.info(f"Errors: {error_count}")
 
 if __name__ == "__main__":
     logger = get_logger("download_zenhub")

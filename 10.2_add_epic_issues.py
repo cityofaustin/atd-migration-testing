@@ -43,7 +43,7 @@ def zenhub_request(repo_id, issue_number, issues):
     # limit requests to 100/min
     time.sleep(.6)
 
-    url = f"https://api.zenhub.io/p1/repositories/{repo_id}/issues/{issue_number}/update_issues"
+    url = f"https://api.zenhub.io/p1/repositories/{repo_id}/epics/{issue_number}/update_issues"
 
     params = {"access_token": ZENHUB_ACCESS_TOKEN}
 
@@ -86,17 +86,20 @@ def zenhub_request(repo_id, issue_number, issues):
 def main():
 
     issues = _utils.load_issues(DIR)
-
+    issue_count = 0
+    epic_count = 0
+    child_issue_count = 0
     for issue in issues:
-
+        issue_count += 1
         if issue.get("is_epic"):
 
             # new issue number of issue that will be converted to epic
             issue_number = issue["migration"].get("new_issue_number")
 
-            payload = {"add_issues": []}
+            payload = {"add_issues": [], "remove_issues": []}
 
             for e in issue["epic_issues"]:
+
                 if e.get("repo_id") == 140626918 and issue.get("repo_id") == 140626918:
                     """
                     We do not need to add issues to epics that are already
@@ -108,11 +111,15 @@ def main():
                     continue
 
                 if e.get("new_issue_number"):
-                    payload["issues"].append(
+                    child_issue_count += 1
+                    payload["add_issues"].append(
                         {"repo_id": DEST_REPO_ID, "issue_number": e["new_issue_number"]}
                     )
+                else:
+                    logger.error(f"Child issue for issue #{issue_number} does not exist: {e}")
 
             if payload["add_issues"]:
+                
                 res = zenhub_request(DEST_REPO_ID, issue_number, payload)
 
                 if not res:
@@ -124,7 +131,11 @@ def main():
                 issue["migration"]["epic_created"] = True
 
                 write_issue(issue, DIR)
+                epic_count += 1
 
+    logger.info(f"Issues Processed: {issue_count}")
+    logger.info(f"Epics Processed: {epic_count}")
+    logger.info(f"Child Issues Processed: {child_issue_count}")
 
 if __name__ == "__main__":
     logger = get_logger("convert_epics")

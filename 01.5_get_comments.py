@@ -54,6 +54,8 @@ def get_comments(repo, issue_number):
 
 def main():
     issues = _utils.load_issues(DIR)
+    
+    issue_count = 0
 
     for issue in issues:
         if (
@@ -70,6 +72,9 @@ def main():
 
         logger.info(issue["number"])
         write_issue(issue, DEST_REPO)
+        issue_count += 1
+
+    logger.info(f"Issues Processed: {issue_count}")
 
 
 if __name__ == "__main__":

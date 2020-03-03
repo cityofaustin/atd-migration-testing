@@ -23,7 +23,7 @@ SOURCE_REPOS = [
     # {"id" : 182864883, "name" : "atd-knack-finance-purchasing"},
     # {"id" : 182868172, "name" : "atd-knack-street-banner"},
     # {"id" : 183466621, "name" : "atd-amanda"},
-    # {"id" : 185268238, "name" : "atd-mobility-project-database"},
+    {"id" : 185268238, "name" : "atd-mobility-project-database"},
     # {"id" : 187703251, "name" : "atd-knack-dts-portal"},
     # {"id" : 191638408, "name" : "atd-knack-signs-markings"},
     # {"id" : 197414350, "name" : "atd-gridsmart"},

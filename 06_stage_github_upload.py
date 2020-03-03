@@ -16,13 +16,16 @@ from _logger import get_logger
 
 
 def write_issues(issues, dest):
+    issue_count = 0
+
     for issue in issues:
         fname = f"{dest}/{issue['repo_name']}${issue['number']}.json"
 
         with open(fname, "w") as fout:
             logger.info(f"{issue['repo_name']} {issue['number']}")
             fout.write(json.dumps(issue))
-    return True
+            issue_count += 1
+    return issue_count
 
 
 def update_body(issue):
@@ -51,8 +54,8 @@ def main():
         issue["migration"]["github_payload"]["body"] = update_body(issue)
         issue["migration"]["github_payload"]["labels"].append("migrated")
 
-    write_issues(issues, DIR)
-
+    issue_count = write_issues(issues, DIR)
+    logger.info(f"Issues Processed: {issue_count}")
 
 if __name__ == "__main__":
     logger = get_logger("stage_github_upload")
