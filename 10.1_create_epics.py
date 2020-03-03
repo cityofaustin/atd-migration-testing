@@ -88,6 +88,8 @@ def main():
 
     issues = _utils.load_issues(DIR)
 
+    issue_count = 0
+    
     for issue in issues:
 
         if issue.get("is_epic") and issue.get("repo_id") != 140626918:
@@ -98,7 +100,7 @@ def main():
 
             # new issue number of issue that will be converted to epic
             issue_number = issue["migration"].get("new_issue_number")
-
+            
             payload = {"issues": []}
 
             res = zenhub_request(DEST_REPO_ID, issue_number, payload)
@@ -111,7 +113,9 @@ def main():
                 issue["migration"]["epic_created"] = True
 
             write_issue(issue, DIR)
+            issue_count += 1
 
+    logger.info(f"Issues Processed: {issue_count}")
 
 if __name__ == "__main__":
     logger = get_logger("creat_epics")
